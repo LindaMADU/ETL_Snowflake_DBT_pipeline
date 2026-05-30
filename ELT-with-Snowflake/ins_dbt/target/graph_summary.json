@@ -1,0 +1,1 @@
+{"_invocation_id": "68f55ad6-c48d-491a-8ae4-34052ad06cfb", "linked": {"0": {"name": "source.ins_dbt.snowflake.CLAIMS", "type": "source", "succ": [3]}, "1": {"name": "source.ins_dbt.snowflake.CUSTOMERS", "type": "source"}, "2": {"name": "model.ins_dbt.claims_summary", "type": "model"}, "3": {"name": "model.ins_dbt.stg_claims", "type": "model", "succ": [2]}}}
