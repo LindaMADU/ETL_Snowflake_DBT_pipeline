@@ -1,4 +1,4 @@
 # ELT-with-Snowflake
 
-##  Project Overview
+##  Project Overview 📌
 
