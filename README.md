@@ -31,6 +31,17 @@ The diagram below shows the full pipeline flow — from Python data generation t
 
 ---
 
+Python (Faker)  →  MongoDB Atlas  →  Airbyte  →  Snowflake  →  dbt  →  Power BI
+   (Generate)       (Source DB)     (ELT)       (Warehouse)  (Transform) (Dashboard)
+                                                  │
+                                         ┌────────┴─────────┐
+                                         │  PUBLIC schema   │  ← Raw Airbyte data
+                                         │  ANALYTICS schema│  ← dbt mart models
+                                         └──────────────────┘
+```
+
+---
+
 ## 🛠️ Tech Stack
 
 | Layer | Tool | Purpose |
@@ -78,59 +89,13 @@ ETL_Snowflake_DBT_pipeline/
 
 ---
 
-## 📊 Data Model
-
-### Source Collections (MongoDB → Snowflake RAW)
-
-**CUSTOMERS** — Insurance policyholder records
-```
-_id              ObjectId    Unique document identifier
-customer_id      String      Business customer ID
-first_name       String      Customer first name
-last_name        String      Customer last name
-email            String      Contact email address
-date_of_birth    Date        Customer date of birth
-policy_type      String      Policy type (Auto, Home, Life, Health)
-policy_start     Date        Policy start date
-premium_amount   Float       Monthly premium in CAD
-city             String      Customer city
-province         String      Canadian province
-```
-
-**CLAIMS** — Insurance claims records
-```
-_id              ObjectId    Unique document identifier
-claim_id         String      Business claim ID
-customer_id      String      FK → CUSTOMERS.customer_id
-claim_date       Date        Date claim was filed
-claim_amount     Float       Claimed amount in CAD
-claim_type       String      Claim category
-claim_status     String      Open / In Review / Approved / Rejected
-resolution_date  Date        Date claim was resolved
-```
-
----
-
-### dbt Transformation Layers
-
-```
-RAW (Airbyte loads)          STAGING (dbt cleaned)       MARTS (dbt aggregated)
-────────────────────         ─────────────────────       ──────────────────────
-CUSTOMERS           ────▶    stg_customers       ──┐
-                                                   ├──▶  fct_claims
-CLAIMS              ────▶    stg_claims          ──┘
-```
-
-**Staging layer** — renames Airbyte metadata columns, casts data types, filters nulls, standardises field names.
-
-**Mart layer** — joins customers to claims, calculates total claim value per customer, claim count, average claim amount, and policy type segmentation. Delivered to the `ANALYTICS` schema for Power BI consumption.
 
 ---
 
 ## 🚀 How to Run This Project
 
 ### Prerequisites
-- Python 3.11+
+- Python 3.13+
 - MongoDB Atlas account (free tier works)
 - Snowflake account (free trial works)
 - Airbyte Cloud or local Airbyte (Docker)
@@ -235,7 +200,6 @@ Expected output:
 2 of 3 OK created sql view model ANALYTICS.stg_claims ............ [OK]
 3 of 3 START sql table model ANALYTICS.fct_claims ................ [RUN]
 3 of 3 OK created sql table model ANALYTICS.fct_claims ........... [OK]
-Finished running 3 models in 0:00:12.
 ```
 
 ### Step 8 — Connect Power BI
@@ -244,7 +208,7 @@ Finished running 3 models in 0:00:12.
 3. Server: `<account>.snowflakecomputing.com`
 4. Warehouse: `COMPUTE_WH`
 5. Database: `INSURANCE` → Schema: `ANALYTICS`
-6. Select `FCT_CLAIMS` → Load
+6. Select CLAIMS_SUMMARY → Load
 7. Build your dashboard visuals
 
 ---
@@ -255,12 +219,10 @@ The dashboard connects live to the Snowflake `ANALYTICS` schema and visualises:
 
 | Visual | Fields | Insight |
 |---|---|---|
-| Line chart | claim_date vs total_claim_amount | Claims cost trend over time |
-| Bar chart | policy_type vs claim_count | Most claimed policy types |
-| Donut chart | claim_status distribution | Approval vs rejection rate |
-| Card KPIs | Total claims, Total payout, Avg claim | Top-level metrics |
-| Map | customer city/province | Geographic claim distribution |
-| Slicer | policy_type, claim_status, year | Interactive filters |
+| Line chart | sum of claims_count by Month |
+| Bar chart | Sum of Claims_count by claim_type |
+| Card KPIs | Sum of Total Amount, Sum of claims_count Avg claim | Sum of Fraud_count |
+
 
 ---
 
@@ -298,14 +260,8 @@ dbt test
 
 ---
 
-## 💡 Key Learnings & Challenges
-
-| Challenge | Solution |
-|---|---|
-| Airbyte nested JSON columns | Flattened in dbt staging layer using `parse_json()` |
-| Snowflake account identifier format | Used `orgname-accountname` format without `.snowflakecomputing.com` |
-| dbt profiles.yml not found | Stored in `~/.dbt/profiles.yml`, not in project directory |
-| Git nested repository conflict | Removed nested `.git` folder before pushing to GitHub |
-| MongoDB authentication errors | Reset Atlas password and whitelisted `0.0.0.0/0` in Network Access |
 
 
+---
+
+> **Note:** All data in this project is synthetically generated using the Python Faker library. No real customer or claims data is used. This project is for portfolio and educational purposes only.
