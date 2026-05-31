@@ -264,4 +264,4 @@ dbt test
 
 ---
 
-> **Note:** All data in this project is synthetically generated using the Python Faker library. No real customer or claims data is used. This project is for portfolio and educational purposes only.
+> **Note:** All data in this project is synthetically generated using the Python Faker library. No real customer or claims data is used. 
