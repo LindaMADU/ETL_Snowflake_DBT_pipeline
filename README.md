@@ -226,6 +226,9 @@ The dashboard connects live to the Snowflake `ANALYTICS` schema and visualises:
 
 
 ---
+<img width="1357" height="1006" alt="image" src="https://github.com/user-attachments/assets/5bdc1327-4867-4ab4-9e24-4b9ea9c39225" />
+
+---
 
 ## 🧪 dbt Tests
 
