@@ -1,11 +1,12 @@
 # 🏥 Insurance ELT Pipeline — MongoDB · Airbyte · Snowflake · dbt · Power BI
 
 ![Pipeline Status](https://img.shields.io/badge/Pipeline-Complete-brightgreen)
+![MongoDB](https://img.shields.io/badge/MongoDB-Source%20Database-47A248?logo=mongodb)
+![Airbyte](https://img.shields.io/badge/Airbyte-ELT%20Connector-615EFF?logo=airbyte)
 ![Snowflake](https://img.shields.io/badge/Snowflake-Cloud%20Warehouse-29B5E8?logo=snowflake)
 ![dbt](https://img.shields.io/badge/dbt-Transformations-FF694B?logo=dbt)
-![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python)
 ![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?logo=powerbi)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
 
 ---
 
@@ -19,33 +20,13 @@ This project demonstrates a production-style modern data stack, covering the ful
 
 ## 🏗️ Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                                                                         │
-│   ┌──────────────┐    ┌──────────────┐    ┌──────────────────────────┐  │
-│   │   Python     │    │   MongoDB    │    │        Airbyte           │  │
-│   │  simulator   │───▶│    Atlas     │───▶│  (ELT Connector)        │  │
-│   │  (Faker)     │    │  (Source DB) │    │  MongoDB → Snowflake     │  │
-│   └──────────────┘    └──────────────┘    └───────────┬──────────────┘  │
-│                                                       │                 │
-│                                           ┌───────────▼──────────────┐  │
-│                                           │        Snowflake         │  │
-│                                           │   ┌──────────────────┐   │  │
-│                                           │   │   PUBLIC schema  │   │  │
-│                                           │   │   (raw layer)    │   │  │
-│                                           │   └────────┬─────────┘   │  │
-│                                           │            │ dbt         │  │
-│                                           │   ┌────────▼─────────┐   │  │
-│                                           │   │ ANALYTICS schema │   │  │
-│                                           │   │ (mart layer)     │   │  │
-│                                           │   └────────┬─────────┘   │  │
-│                                           └───────────┬┘             │  │
-│                                                       │              │  │
-│                                           ┌───────────▼──────────────┐  │
-│                                           │        Power BI          │  │
-│                                           │  (Live Snowflake conn.)  │  │
-│                                           └──────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────────┘
+The diagram below shows the full pipeline flow — from Python data generation through MongoDB, Airbyte ingestion, Snowflake warehousing, dbt transformation, and Power BI reporting.
+
+
+<img width="2540" height="924" alt="image" src="https://github.com/user-attachments/assets/05782727-93ce-4bdb-a9ca-5fe29d7be877" />
+
+
+
 ```
 
 ---
