@@ -225,8 +225,7 @@ The dashboard connects live to the Snowflake `ANALYTICS` schema and visualises:
 | Card KPIs | Sum of Total Amount, Sum of claims_count Avg claim | Sum of Fraud_count |
 
 
----
-<img width="1357" height="1006" alt="image" src="https://github.com/user-attachments/assets/5bdc1327-4867-4ab4-9e24-4b9ea9c39225" />
+
 
 ---
 
