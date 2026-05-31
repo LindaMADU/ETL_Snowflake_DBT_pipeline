@@ -1,4 +1,5 @@
-# 🏥 Insurance ELT Pipeline — MongoDB · Airbyte · Snowflake · dbt · Power BI
+ 
+# Insurance ELT Pipeline — MongoDB · Airbyte · Snowflake · dbt · Power BI
 
 ![Pipeline Status](https://img.shields.io/badge/Pipeline-Complete-brightgreen)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Source%20Database-47A248?logo=mongodb)
