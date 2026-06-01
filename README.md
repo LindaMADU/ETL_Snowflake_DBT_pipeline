@@ -24,7 +24,8 @@ This project demonstrates a production-style modern data stack, covering the ful
 The diagram below shows the full pipeline flow — from Python data generation through MongoDB, Airbyte ingestion, Snowflake warehousing, dbt transformation, and Power BI reporting.
 
 
-<img width="2540" height="924" alt="image" src="https://github.com/user-attachments/assets/05782727-93ce-4bdb-a9ca-5fe29d7be877" />
+<img width="3124" height="2604" alt="image" src="https://github.com/user-attachments/assets/4ec7703e-044c-4c3f-a984-cfc8dbea4199" />
+
 
 
 
